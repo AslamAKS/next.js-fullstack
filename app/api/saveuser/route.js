@@ -26,3 +26,19 @@ export async function GET() {
     return Response.json({ error: error.message }, { status: 500 });
   }
 }
+
+export async function DELETE(req) {
+  try {
+    await dbConnect();
+    
+    const { searchParams } = new URL(req.url);
+    const userId = searchParams.get("id");
+
+    const allUsers = await users.deleteOne({_id:userId});
+
+    return Response.json({ message: "user deleted" }, { status: 200 });
+  } catch (error) {
+    console.log(error)
+    return Response.json({ error: error.message }, { status: 500 });
+  }
+}

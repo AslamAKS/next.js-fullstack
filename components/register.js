@@ -60,6 +60,24 @@ function Register() {
     }
   };
 
+  const handleDelete=(id)=>{
+    console.log("id",id)
+    try {
+      axios
+        .delete(`/api/saveuser?id=${id}`)
+        .then((responce) => {
+          alert(`deleted`);
+          fetchUsers();
+        })
+        .then((err) => {
+          console.log(err);
+          fetchUsers();
+        });
+    } catch (error) {
+      console.error("Error:", error);
+    }
+  }
+
   return (
     <Box
       sx={{
@@ -117,6 +135,7 @@ function Register() {
               <TableCell component="th" align="center">Name</TableCell>
               <TableCell component="th" align="center">Email</TableCell>
               <TableCell component="th" align="center">Message</TableCell>
+              <TableCell component="th" align="center">Delete</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -130,6 +149,7 @@ function Register() {
                 </TableCell>
                 <TableCell align="center">{row.email}</TableCell>
                 <TableCell align="center">{row.message}</TableCell>
+                <TableCell align="center" onClick={()=>handleDelete(row._id)} sx={{cursor:"pointer",color:"red"}}>Delete</TableCell>
               </TableRow>
             ))}
           </TableBody>
